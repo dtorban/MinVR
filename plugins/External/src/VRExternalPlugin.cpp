@@ -33,19 +33,11 @@ public:
 	/// onVRRenderContext is the override which allows users to setup context specific
 	/// variables like VBO's, VAO's, textures, framebuffers, and shader programs.
 	void onVRRenderContext(const VRDataIndex &stateData) {
-		if ((int)stateData.getValue("InitRender") == 1) {
-			std::cout << "Context " << std::endl;
-			std::cout << stateData.serialize() << std::endl;
-		}
 		contextCallback(this, &stateData);
 	}
 
 	/// onVRRenderScene will run draw calls on each viewport inside a context.
 	void onVRRenderScene(const VRDataIndex &stateData) {
-		if ((int)stateData.getValue("InitRender") == 1) {
-			std::cout << "Scene " << std::endl;
-			std::cout << stateData.serialize() << std::endl;
-		}
 		sceneCallback(this, &stateData);
 	}
 
@@ -102,6 +94,13 @@ extern "C" {
 	PLUGIN_API float dataIndexGetFloatValue(const void* dataIndex, char* key) {
 		const VRDataIndex& index = *static_cast<const VRDataIndex*>(dataIndex);
 		return (float)index.getValue(key);
+	}
+
+	PLUGIN_API void dataIndexGetFloatArray(const void* dataIndex, char* key, float* arr, int size) {
+		const VRDataIndex& data = *static_cast<const VRDataIndex*>(dataIndex);
+		std::string name = data.getName();
+		VRFloatArray projMat = data.getValue(key);// "ProjectionMatrix");
+		memcpy(arr, &projMat[0], size*sizeof(float));
 	}
 
 	PLUGIN_API void minvrCallback(void* app, const void* state) {

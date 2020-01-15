@@ -1,8 +1,8 @@
 <MinVR>
 
   <PluginPath>d:/home/dan/src/MinVR/build/plugins</PluginPath>
-  <GLFWPlugin pluginType="MinVR_GLFW"/>
-  <OpenGLPlugin pluginType="MinVR_OpenGL"/>
+  <!--GLFWPlugin pluginType="MinVR_GLFW"/-->
+  <!--OpenGLPlugin pluginType="MinVR_OpenGL"/-->
   <!--ThreadingPlugin pluginType="MinVR_Threading"/-->
 
   <Cave hostType="VRStandAlone">
