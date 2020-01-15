@@ -398,6 +398,7 @@ minvr_optional_adddir(
   "plugins/Scalable"
 )
 
+add_subdirectory(plugins/External)
 
 # ---- Plugins that Provide a Window Toolkit ----
 # Save a list of plugins that provide a window toolkit so that we can error out
