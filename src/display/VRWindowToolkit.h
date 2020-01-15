@@ -7,6 +7,8 @@
 
 
 namespace MinVR {
+	class VRMainInterface;
+	class VRDataIndex;
 
 /** New window settings are likely to be introduced over time, and there will be
     a long list of settings, so these are stored in a settings data structure to
@@ -98,6 +100,30 @@ public:
 	static std::string getAttributeName(){ return "windowtoolkitType"; };
 };
 
+
+class VRDummyWindowToolkit : public VRWindowToolkit {
+public:
+	std::string getName() const { return "VRDummyWindowToolkit"; }
+
+	int createWindow(VRWindowSettings settings) {
+		static int index = 0;
+		windows.push_back(index);
+		index++;
+		return index - 1;
+	}
+	void destroyWindow(int windowID) {}
+	void makeWindowCurrent(int windowID) {}
+	void swapBuffers(int windowID) {}
+	void getFramebufferSize(int windowID, int& width, int& height) {}
+	VRglproc getProcAddress(const char *name) { return NULL; }
+
+	static std::string getAttributeName() { return "windowtoolkitType"; };
+
+	static VRWindowToolkit* create(VRMainInterface *vrMain, VRDataIndex *config, const std::string &nameSpace) { return new VRDummyWindowToolkit();  }
+
+private:
+	std::vector<int> windows;
+};
 
 } // end namespace
 

@@ -6,6 +6,8 @@
 
 
 namespace MinVR {
+	class VRMainInterface;
+	class VRDataIndex;
   
   
 /** Abstract base class for graphics toolkits that are implemented in plugins.  Examples
@@ -55,6 +57,22 @@ public:
 
 	static std::string getAttributeName(){ return "graphicstoolkitType"; };
 
+};
+
+class VRDummyGraphicsToolkit : public VRGraphicsToolkit {
+public:
+	std::string getName() const { return "VRDummyGraphicsToolkit"; }
+	void setDrawBuffer(VRDRAWBUFFER buffer) {}
+	void setSubWindow(VRRect rect) {}
+	void disableDrawingOnOddColumns() {}
+	void disableDrawingOnEvenColumns() {}
+	void enableDrawingOnAllColumns() {}
+	void flushGraphics() {}
+	void finishGraphics() {}
+
+	static std::string getAttributeName() { return "graphicstoolkitType"; };
+
+	static VRGraphicsToolkit* create(VRMainInterface *vrMain, VRDataIndex *config, const std::string &nameSpace) { return new VRDummyGraphicsToolkit(); }
 };
 
 } // end namespace

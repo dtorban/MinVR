@@ -25,8 +25,8 @@
     <SharedContextGroupID>1</SharedContextGroupID>
     
     <!-- Common to all clients -->
-    <GLFWToolkit windowtoolkitType="VRGLFWWindowToolkit"/>
-    <OpenGLToolkit graphicstoolkitType="VROpenGLGraphicsToolkit"/>
+    <GLFWToolkit windowtoolkitType="VRDummyWindowToolkit"/>
+    <OpenGLToolkit graphicstoolkitType="VRDummyGraphicsToolkit"/>
 
     <!-- Common display graph configuration -->
     <Border>0</Border>
@@ -45,7 +45,7 @@
     <Height>200</Height>
 
     <ThreadGroupNode displaynodeType="VRGroupNode">
-      <FrontWall displaynodeType="VRGroupNode">
+      <FrontWall displaynodeType="VRGraphicsWindowNode">
         <XPos>250</XPos>
         <TopLeft type="floatarray">-4,4,-4</TopLeft>
         <TopRight type="floatarray">4,4,-4</TopRight>
@@ -53,7 +53,7 @@
         <BottomRight type="floatarray">4,-4,-4</BottomRight>
         <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
       </FrontWall>
-      <Floor displaynodeType="VRGroupNode">
+      <Floor displaynodeType="VRGraphicsWindowNode">
         <XPos>250</XPos>
         <YPos>300</YPos>
         <TopLeft type="floatarray">-4,-4,-4</TopLeft>
@@ -62,7 +62,7 @@
         <BottomRight type="floatarray">4,-4,4</BottomRight>
         <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
       </Floor>
-      <LeftWall displaynodeType="VRGroupNode">
+      <LeftWall displaynodeType="VRGraphicsWindowNode">
           <XPos>50</XPos>
           <TopLeft type="floatarray">-4,4,4</TopLeft>
           <TopRight type="floatarray">-4,4,-4</TopRight>
@@ -70,7 +70,7 @@
           <BottomRight type="floatarray">-4,-4,-4</BottomRight>
           <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
       </LeftWall>
-      <RightWall displaynodeType="VRGroupNode">
+      <RightWall displaynodeType="VRGraphicsWindowNode">
           <XPos>450</XPos>
           <TopLeft type="floatarray">4,4,-4</TopLeft>
           <TopRight type="floatarray">4,4,4</TopRight>

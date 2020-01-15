@@ -283,6 +283,8 @@ VRMain::VRMain() : _initialized(false), _config(NULL), _net(NULL), _factory(NULL
   _factory->registerItemType<VRInputDevice, VRFakeHandTrackerDevice>("VRFakeHandTrackerDevice");
   _factory->registerItemType<VRInputDevice, VRFakeHeadTrackerDevice>("VRFakeHeadTrackerDevice");
   _factory->registerItemType<VRInputDevice, VRFakeTrackerDevice>("VRFakeTrackerDevice");
+  _factory->registerItemType<VRGraphicsToolkit, VRDummyGraphicsToolkit>("VRDummyGraphicsToolkit");
+  _factory->registerItemType<VRWindowToolkit, VRDummyWindowToolkit>("VRDummyWindowToolkit");
 
   _pluginMgr = new VRPluginManager(this);
 }
