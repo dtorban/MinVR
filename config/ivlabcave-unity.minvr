@@ -32,6 +32,7 @@
     <Border>0</Border>
     <Caption>Desktop</Caption>
     <StereoFormat>Mono</StereoFormat>
+    <!--StereoFormat>QuadBuffered</StereoFormat-->
     <EyeSeparation>0.203</EyeSeparation>
     <NearClip>0.001</NearClip>
     <FarClip>500.0</FarClip>
@@ -41,12 +42,12 @@
 	<LookAtCenter type="floatarray">0,0,0</LookAtCenter>
 
     <YPos>100</YPos>
-    <Width>200</Width>
-    <Height>200</Height>
+    <Width>512</Width>
+    <Height>512</Height>
 
     <ThreadGroupNode displaynodeType="VRGroupNode">
       <FrontWall displaynodeType="VRGraphicsWindowNode">
-        <XPos>250</XPos>
+        <XPos>512</XPos>
         <TopLeft type="floatarray">-4,4,-4</TopLeft>
         <TopRight type="floatarray">4,4,-4</TopRight>
         <BottomLeft type="floatarray">-4,-4,-4</BottomLeft>
@@ -54,8 +55,8 @@
         <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
       </FrontWall>
       <Floor displaynodeType="VRGraphicsWindowNode">
-        <XPos>250</XPos>
-        <YPos>300</YPos>
+        <XPos>512</XPos>
+        <YPos>612</YPos>
         <TopLeft type="floatarray">-4,-4,-4</TopLeft>
         <TopRight type="floatarray">4,-4,-4</TopRight>
         <BottomLeft type="floatarray">-4,-4,4</BottomLeft>
@@ -63,7 +64,7 @@
         <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
       </Floor>
       <LeftWall displaynodeType="VRGraphicsWindowNode">
-          <XPos>50</XPos>
+          <XPos>0</XPos>
           <TopLeft type="floatarray">-4,4,4</TopLeft>
           <TopRight type="floatarray">-4,4,-4</TopRight>
           <BottomLeft type="floatarray">-4,-4,4</BottomLeft>
@@ -71,7 +72,7 @@
           <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
       </LeftWall>
       <RightWall displaynodeType="VRGraphicsWindowNode">
-          <XPos>450</XPos>
+          <XPos>1024</XPos>
           <TopLeft type="floatarray">4,4,-4</TopLeft>
           <TopRight type="floatarray">4,4,4</TopRight>
           <BottomLeft type="floatarray">4,-4,-4</BottomLeft>

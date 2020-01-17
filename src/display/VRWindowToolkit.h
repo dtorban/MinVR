@@ -103,13 +103,12 @@ public:
 
 class VRDummyWindowToolkit : public VRWindowToolkit {
 public:
+	VRDummyWindowToolkit() : index(0) {}
 	std::string getName() const { return "VRDummyWindowToolkit"; }
 
 	int createWindow(VRWindowSettings settings) {
-		static int index = 0;
-		windows.push_back(index);
 		index++;
-		return index - 1;
+		return index-1;
 	}
 	void destroyWindow(int windowID) {}
 	void makeWindowCurrent(int windowID) {}
@@ -122,7 +121,7 @@ public:
 	static VRWindowToolkit* create(VRMainInterface *vrMain, VRDataIndex *config, const std::string &nameSpace) { return new VRDummyWindowToolkit();  }
 
 private:
-	std::vector<int> windows;
+	int index;
 };
 
 } // end namespace
