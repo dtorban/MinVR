@@ -398,6 +398,14 @@ minvr_optional_adddir(
   "plugins/Scalable"
 )
 
+#---- Scalable ----
+minvr_optional_adddir(
+  WITH_PLUGIN_VISLINK
+  "VisLink Plugin"
+  "(Requires VisLink Library)"
+  "plugins/VisLink"
+)
+
 add_subdirectory(plugins/External)
 
 # ---- Plugins that Provide a Window Toolkit ----

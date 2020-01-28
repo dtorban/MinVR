@@ -578,38 +578,38 @@ public:
 
     int _frame;
 
-	template <class T>
-	std::vector<T*> VRMain::getDisplayNodesByType(VRDisplayNode* node)
-	{
-
-		std::vector<T*> vec;
-		std::vector<VRDisplayNode*> nodes;
-
-		if (node == nullptr) {
-			nodes = _displayGraphs;
-		}
-		else
-		{
-			nodes = node->getChildren();
-		}
-
-		for (int i = 0; i < nodes.size(); i++)
-		{
-			T* tmp = dynamic_cast<T*>(nodes[i]);
-			if (tmp != nullptr)
-			{
-				vec.push_back(tmp);
-			}
-			std::vector<T*> vec2 = getDisplayNodesByType<T>(nodes[i]);
-			if (!vec2.empty())vec.insert(vec.end(), vec2.begin(), vec2.end());
-		}
-		return vec;
-	}
-
 
 
     bool _shutdown;
 };
+
+template <class T>
+std::vector<T*> VRMain::getDisplayNodesByType(VRDisplayNode* node)
+{
+
+  std::vector<T*> vec;
+  std::vector<VRDisplayNode*> nodes;
+
+  if (node == nullptr) {
+    nodes = _displayGraphs;
+  }
+  else
+  {
+    nodes = node->getChildren();
+  }
+
+  for (int i = 0; i < nodes.size(); i++)
+  {
+    T* tmp = dynamic_cast<T*>(nodes[i]);
+    if (tmp != nullptr)
+    {
+      vec.push_back(tmp);
+    }
+    std::vector<T*> vec2 = getDisplayNodesByType<T>(nodes[i]);
+    if (!vec2.empty())vec.insert(vec.end(), vec2.begin(), vec2.end());
+  }
+  return vec;
+}
 
 
 } // end namespace

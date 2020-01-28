@@ -47,7 +47,7 @@ source_group("Header Files" FILES ${HEADERFILES})
 set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "plugins")
 
 # Define the target
-add_executable(${PROJECT_NAME}2 ${HEADERFILES} ${SOURCEFILES})
+#add_executable(${PROJECT_NAME}2 ${HEADERFILES} ${SOURCEFILES})
 # Setup dependency on libMinVR:
-target_include_directories(${PROJECT_NAME}2 PUBLIC ../../src)
-target_link_libraries(${PROJECT_NAME}2 PUBLIC MinVR)
+#target_include_directories(${PROJECT_NAME}2 PUBLIC ../../src)
+#target_link_libraries(${PROJECT_NAME}2 PUBLIC MinVR)
