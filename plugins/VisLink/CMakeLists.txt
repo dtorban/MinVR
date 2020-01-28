@@ -26,11 +26,11 @@ include(${CMAKE_FRAMEWORK_DIR}/project/project.cmake)
 
 # Source:
 set (SOURCEFILES 
-  #src/VRVisLinkTextureNode.cpp
+  src/VRVisLinkTextureNode.cpp
   src/VRVisLinkPlugin.cpp
 )
 set (HEADERFILES
-  #src/VRVisLinkTextureNode.h
+  src/VRVisLinkTextureNode.h
 )
 
 #---------------------------- Dependencies ---------------------------
@@ -48,6 +48,7 @@ set(vislink_external_dir ${external_dir}/VisLinkLib/src/cmake/framework/external
 
 add_definitions(-DGLM_FORCE_INLINE)
 include_directories(${external_dir}/glm/src)
+include_directories(${external_dir}/VisLinkLib/src/src)
 
 set(DEP_LINK_DIRS ${DEP_LINK_DIRS} 
   ${vislink_external_dir}/SandBox/build/install/lib
@@ -55,6 +56,7 @@ set(DEP_LINK_DIRS ${DEP_LINK_DIRS}
 set(DEP_INCLUDES ${DEP_INCLUDES} 
   ${vislink_external_dir}/SandBox/src/src
   ${vislink_external_dir}/SandBox/cmake/framework/external/glm/src
+  ${vislink_external_dir}/SandBox/src/cmake/framework/external/stb/src
 )
 
 set(DEP_LINK_DIRS ${DEP_LINK_DIRS} 
@@ -64,10 +66,15 @@ set(DEP_INCLUDES ${DEP_INCLUDES}
   ${vislink_external_dir}/SandBox/src/cmake/framework/external/glfw3/build/install/include
 )
 if(MSVC)
-  set(DEP_LIBS ${DEP_LIBS} optimized glfw3.lib debug glfw3d.lib)
+  set(DEP_LIBS ${DEP_LIBS} optimized glfw3.lib sandbox.lib debug glfw3d.lib sandbox.lib)
 else()
-  set(DEP_LIBS ${DEP_LIBS} optimized libglfw3.a debug libglfw3d.a)
+  set(DEP_LIBS ${DEP_LIBS} optimized libglfw3.a sandbox.a debug libglfw3d.a sandbox.a)
 endif()
+
+find_package(Vulkan REQUIRED)
+message("vk Found" ${Vulkan_FOUND} ${Vulkan_INCLUDE_DIRS} ${Vulkan_LIBRARIES})
+include_directories(${Vulkan_INCLUDE_DIRS})
+set(DEP_LIBS ${DEP_LIBS} ${Vulkan_LIBRARIES})
 
 include(${external_dir}/OpenGL/OpenGL.cmake)
 useOpenGL()

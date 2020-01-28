@@ -30,7 +30,7 @@
     <OpenGLToolkit graphicstoolkitType="VROpenGLGraphicsToolkit"/>
 
     <!-- Common display graph configuration -->
-    <Border>0</Border>
+    <Border>1</Border>
     <Caption>Desktop</Caption>
     <StereoFormat>Mono</StereoFormat>
     <EyeSeparation>0.203</EyeSeparation>
@@ -47,38 +47,56 @@
 
     <ThreadGroupNode displaynodeType="VRThreadGroupNode">
       <FrontWall displaynodeType="VRGraphicsWindowNode">
+        <TextureNode displaynodeType="VRVisLinkTextureNode">
+        </TextureNode>
         <XPos>250</XPos>
-        <TopLeft type="floatarray">-4,4,-4</TopLeft>
-        <TopRight type="floatarray">4,4,-4</TopRight>
-        <BottomLeft type="floatarray">-4,-4,-4</BottomLeft>
-        <BottomRight type="floatarray">4,-4,-4</BottomRight>
-        <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
       </FrontWall>
       <Floor displaynodeType="VRGraphicsWindowNode">
         <XPos>250</XPos>
         <YPos>300</YPos>
-        <TopLeft type="floatarray">-4,-4,-4</TopLeft>
-        <TopRight type="floatarray">4,-4,-4</TopRight>
-        <BottomLeft type="floatarray">-4,-4,4</BottomLeft>
-        <BottomRight type="floatarray">4,-4,4</BottomRight>
-        <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
       </Floor>
       <LeftWall displaynodeType="VRGraphicsWindowNode">
+          <XPos>50</XPos>
+      </LeftWall>
+      <RightWall displaynodeType="VRGraphicsWindowNode">
+          <XPos>450</XPos>
+      </RightWall>
+
+      <UnityDisplay displaynodeType="VRThreadGroupNode">
+        <FrontWall displaynodeType="VRGraphicsWindowNode">
+          <XPos>250</XPos>
+          <TopLeft type="floatarray">-4,4,-4</TopLeft>
+          <TopRight type="floatarray">4,4,-4</TopRight>
+          <BottomLeft type="floatarray">-4,-4,-4</BottomLeft>
+          <BottomRight type="floatarray">4,-4,-4</BottomRight>
+          <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
+        </FrontWall>
+        <Floor displaynodeType="VRGraphicsWindowNode">
+          <XPos>250</XPos>
+          <YPos>300</YPos>
+          <TopLeft type="floatarray">-4,-4,-4</TopLeft>
+          <TopRight type="floatarray">4,-4,-4</TopRight>
+          <BottomLeft type="floatarray">-4,-4,4</BottomLeft>
+          <BottomRight type="floatarray">4,-4,4</BottomRight>
+          <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
+        </Floor>
+        <LeftWall displaynodeType="VRGraphicsWindowNode">
           <XPos>50</XPos>
           <TopLeft type="floatarray">-4,4,4</TopLeft>
           <TopRight type="floatarray">-4,4,-4</TopRight>
           <BottomLeft type="floatarray">-4,-4,4</BottomLeft>
           <BottomRight type="floatarray">-4,-4,-4</BottomRight>
           <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
-      </LeftWall>
-      <RightWall displaynodeType="VRGraphicsWindowNode">
-          <XPos>450</XPos>
-          <TopLeft type="floatarray">4,4,-4</TopLeft>
-          <TopRight type="floatarray">4,4,4</TopRight>
-          <BottomLeft type="floatarray">4,-4,-4</BottomLeft>
-          <BottomRight type="floatarray">4,-4,4</BottomRight>
-          <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
-      </RightWall>
+        </LeftWall>
+        <RightWall displaynodeType="VRGraphicsWindowNode">
+            <XPos>450</XPos>
+            <TopLeft type="floatarray">4,4,-4</TopLeft>
+            <TopRight type="floatarray">4,4,4</TopRight>
+            <BottomLeft type="floatarray">4,-4,-4</BottomLeft>
+            <BottomRight type="floatarray">4,-4,4</BottomRight>
+            <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
+        </RightWall>
+      </UnityDisplay>
     </ThreadGroupNode>
     
     <!-- ********************** Display Graph ********************** -->

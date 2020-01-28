@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <plugin/VRPlugin.h>
-//#include "VROpenGLGraphicsToolkit.h"
+#include "VRVisLinkTextureNode.h"
 
 // special: include this only once in one .cpp file per plugin
 #include <plugin/VRPluginVersion.h>
@@ -28,7 +28,7 @@ public:
 	PLUGIN_API void registerWithMinVR(VRMainInterface *vrMain)
 	{
       std::cout << "Registering VRVisLinkPlugin." << std::endl;
-		//vrMain->getFactory()->registerItemType<VRGraphicsToolkit, VROpenGLGraphicsToolkit>("VROpenGLGraphicsToolkit");
+	  vrMain->getFactory()->registerItemType<VRDisplayNode, VRVisLinkTextureNode>("VRVisLinkTextureNode");
 	}
 
 	PLUGIN_API void unregisterWithMinVR(VRMainInterface *vrMain)
