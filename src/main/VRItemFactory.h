@@ -109,6 +109,27 @@ public:
 	}
 };
 
+template <typename ParentType, typename T, typename PARAM>
+class VRConcreteItemFactoryWithParam : public VRSpecificItemFactory<ParentType> {
+public:
+	VRConcreteItemFactoryWithParam(const std::string& typeName, PARAM param) : VRSpecificItemFactory<ParentType>(typeName), param(param) {}
+	virtual ~VRConcreteItemFactoryWithParam() {}
+
+	/// Calls static create(...) method specified by the type.
+	ParentType* createConcrete(VRMainInterface *vrMain, VRDataIndex *config, const std::string &itemNameSpace) {
+		ParentType* item = T::create(vrMain, config, itemNameSpace, param);
+		if (typeid(ParentType) == typeid(VRDisplayNode))
+		{
+			VRDisplayNode* displayNode = dynamic_cast<VRDisplayNode*>(item);
+			displayNode->createChildren(vrMain, config, itemNameSpace);
+		}
+		return item;
+	}
+
+private:
+	PARAM param;
+};
+
 
 } /* namespace MinVR */
 

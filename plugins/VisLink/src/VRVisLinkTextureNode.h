@@ -16,12 +16,14 @@
 #include <main/VRError.h>
 #include <OpenGL.h>
 #include "sandbox/image/Image.h"
+#include <VisLink/VisLinkAPI.h>
+#include <display/VRWindowToolkit.h>
 
 namespace MinVR {
 
 class VRVisLinkTextureNode : public VRDisplayNode {
 public:
-	VRVisLinkTextureNode(const std::string &name);
+	VRVisLinkTextureNode(const std::string &name, bool stereo, vislink::VisLinkAPI* api, VRWindowToolkit* winToolkit);
 	virtual ~VRVisLinkTextureNode();
 
 	virtual std::string getType() const { return "VRVisLinkTextureNode"; }
@@ -29,7 +31,7 @@ public:
 	void render(VRDataIndex *renderState, VRRenderHandler* renderHandler);
 	void displayFinishedRendering(VRDataIndex *renderState);
 
-	static VRDisplayNode* create(VRMainInterface *vrMain, VRDataIndex *config, const std::string &nameSpace);
+	static VRDisplayNode* create(VRMainInterface *vrMain, VRDataIndex *config, const std::string &nameSpace, void* plugin);
 
 private:
 	void renderTexture();
@@ -39,10 +41,11 @@ private:
 	} textures[2];
 
 	sandbox::EntityNode mainImage;
-
 	GLuint vbo, vao, vshader, fshader, shaderProgram;
-
+	bool stereo;
 	int frame;
+	vislink::VisLinkAPI* api;
+	VRWindowToolkit* winToolkit;
 };
 
 } /* namespace MinVR */

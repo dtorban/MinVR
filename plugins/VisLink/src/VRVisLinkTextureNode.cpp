@@ -7,21 +7,39 @@
  */
 
 #include <VRVisLinkTextureNode.h>
-#include <VisLink/net/Server.h>
+#include <VisLink/impl/VisLinkAPIImpl.h>
+#include <VisLink/image/Texture.h>
 
 using namespace sandbox; 
 
 namespace MinVR {
 
+class VRVisLinkProcLoader : public vislink::ProcLoader {
+public:
+    VRVisLinkProcLoader(VRWindowToolkit* winToolkit) : winToolkit(winToolkit) {}
+    vislink::VLProc getProc(const char* name) {
+        return winToolkit->getProcAddress(name);
+    }
 
-VRVisLinkTextureNode::VRVisLinkTextureNode(const std::string &name) : VRDisplayNode(name), frame(0)  {
-	vislink::VisLinkAPIImpl* impl = new vislink::VisLinkAPIImpl();
+private:
+    VRWindowToolkit* winToolkit;
+};
+
+VRVisLinkTextureNode::VRVisLinkTextureNode(const std::string &name, bool stereo, vislink::VisLinkAPI* api, VRWindowToolkit* winToolkit) : VRDisplayNode(name), frame(0), stereo(stereo), api(api), winToolkit(winToolkit)  {
+    this->api = new vislink::VisLinkOpenGL(*api, new VRVisLinkProcLoader(winToolkit));
+
     mainImage.addComponent(new Image("../cmake/framework/external/VisLinkLib/src/app/textures/test.png"));
     mainImage.update();
     
+    std::cout << name << " " << getName() << std::endl; 
+    api->createSharedTexture(getName() + "/0/Left", vislink::Texture());
+    api->createSharedTexture(getName() + "/0/Right", vislink::Texture());
+    api->createSharedTexture(getName() + "/1/Left", vislink::Texture());
+    api->createSharedTexture(getName() + "/1/Right", vislink::Texture());
 }
 
 VRVisLinkTextureNode::~VRVisLinkTextureNode() {
+	delete api;
 }
 
 	
@@ -62,6 +80,8 @@ void VRVisLinkTextureNodelinkShaderProgram(GLuint shaderProgram) {
   
 void VRVisLinkTextureNode::render(VRDataIndex *renderState, VRRenderHandler *renderHandler) {
 	if ((int)renderState->getValue("InitRender") == 1) {
+		initializeGLExtentions();
+
         glDisable(GL_DEPTH_TEST);
         glClearColor(0, 0, 0, 1);
 
@@ -146,14 +166,16 @@ void VRVisLinkTextureNode::render(VRDataIndex *renderState, VRRenderHandler *ren
         GLuint format = GL_RGBA;
         GLuint internalFormat = GL_RGBA;
         GLuint type = GL_UNSIGNED_BYTE;
+        std::cout << "new api2: " << api << std::endl;
 
-        //left = createOpenGLTexture(left);
-        //right = createOpenGLTexture(right);
-        Image* image = mainImage.getComponent<Image>(); 
-        glCreateTextures(GL_TEXTURE_2D, 1, &textures[0].left);
+	    textures[0].left = api->getSharedTexture(getName() + "/0/Left").id;
+	    textures[0].right = api->getSharedTexture(getName() + "/0/Right").id;
+	    textures[1].left = api->getSharedTexture(getName() + "/1/Left").id;
+	    textures[1].right = api->getSharedTexture(getName() + "/1/Right").id;
+
+        Image* image = mainImage.getComponent<Image>();  
         glBindTexture(GL_TEXTURE_2D, textures[0].left);
-        glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, image->getWidth(), image->getHeight(), 0, format, type, image->getData());
-        //glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, image->getWidth(), image->getHeight(), internalFormat, type, image->getData());
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, image->getWidth(), image->getHeight(), internalFormat, type, image->getData());
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
@@ -165,12 +187,12 @@ void VRVisLinkTextureNode::render(VRDataIndex *renderState, VRRenderHandler *ren
         glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
     }
 
-    if (false) {
+    if (stereo) {
     	glDrawBuffer(GL_FRONT_LEFT);
-    	glBindTexture(GL_TEXTURE_2D, textures[0].left);
+    	glBindTexture(GL_TEXTURE_2D, textures[frame % 2].left);
     	renderTexture();
     	glDrawBuffer(GL_FRONT_RIGHT);
-    	glBindTexture(GL_TEXTURE_2D, textures[0].right);
+    	glBindTexture(GL_TEXTURE_2D, textures[frame % 2].right);
     	renderTexture();
     }
     else {
@@ -205,13 +227,23 @@ void VRVisLinkTextureNode::displayFinishedRendering(VRDataIndex *renderState) {
 
 
 VRDisplayNode*
-VRVisLinkTextureNode::create(VRMainInterface *vrMain, VRDataIndex *config, const std::string &nameSpace) {
+VRVisLinkTextureNode::create(VRMainInterface *vrMain, VRDataIndex *config, const std::string &nameSpace, void* param) {
 	std::string nodeNameSpace = nameSpace;
-	VRDisplayNode *node = new VRVisLinkTextureNode(nameSpace);
+	vislink::VisLinkAPI* api = static_cast<vislink::VisLinkAPI*>(param);
 
-	// nothing more to do, no children for a console node.
+    std::string wtk = config->getValue("WindowToolkit", nameSpace);
+    VRWindowToolkit *winToolkit = vrMain->getWindowToolkit(wtk);
+    if (winToolkit == NULL) {
+      std::cerr << "Cannot get the window toolkit named: " << wtk << std::endl;
+    }
 
-	return node;
+	if (config->exists("StereoFormat", nameSpace)) {
+		std::string formatStr = config->getValue("StereoFormat", nameSpace);
+		return new VRVisLinkTextureNode(nameSpace, formatStr == "QuadBuffered", api, winToolkit);
+	}
+
+
+	return new VRVisLinkTextureNode(nameSpace, false, api, winToolkit);
 }
 
 

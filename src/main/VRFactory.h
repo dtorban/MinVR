@@ -32,6 +32,10 @@ public:
   /// method with the same signature as the VRItemFactory create method.
   template <typename ParentType, typename T>
   void registerItemType(const std::string typeName);
+  /// Plugins call this method to register an item type which has a static create
+  /// method with the same signature as the VRItemFactory create method.
+  template <typename ParentType, typename T, typename PARAM>
+  void registerItemTypeWithParam(const std::string typeName, PARAM param);
 
   /// Plugins call this method to add a new "sub-factory" to this master factory.
   void addSubFactory(VRItemFactory* factory);
@@ -84,6 +88,14 @@ void VRFactory::registerItemType(const std::string typeName) {
   _registeredTypes.push_back(typeName);
 
   addSubFactory(new VRConcreteItemFactory<ParentType, T>(typeName));
+}
+
+template <typename ParentType, typename T, typename PARAM>
+void VRFactory::registerItemTypeWithParam(const std::string typeName, PARAM param) {
+
+  _registeredTypes.push_back(typeName);
+
+  addSubFactory(new VRConcreteItemFactoryWithParam<ParentType, T, PARAM>(typeName, param));
 }
 
 } // end namespace

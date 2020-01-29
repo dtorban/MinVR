@@ -12,7 +12,7 @@
 
 // special: include this only once in one .cpp file per plugin
 #include <plugin/VRPluginVersion.h>
-
+#include <VisLink/impl/VisLinkAPIImpl.h>
 
 namespace MinVR {
 
@@ -28,7 +28,8 @@ public:
 	PLUGIN_API void registerWithMinVR(VRMainInterface *vrMain)
 	{
       std::cout << "Registering VRVisLinkPlugin." << std::endl;
-	  vrMain->getFactory()->registerItemType<VRDisplayNode, VRVisLinkTextureNode>("VRVisLinkTextureNode");
+      api = new vislink::VisLinkAPIImpl();
+	  vrMain->getFactory()->registerItemTypeWithParam<VRDisplayNode, VRVisLinkTextureNode, void*>("VRVisLinkTextureNode", api);
 	}
 
 	PLUGIN_API void unregisterWithMinVR(VRMainInterface *vrMain)
@@ -36,6 +37,9 @@ public:
       //std::cout << "Unregistering GlfwPlugin." << std::endl;
 		// TODO
 	}
+
+private:
+	vislink::VisLinkAPI* api;
 };
 
 } // end namespace
