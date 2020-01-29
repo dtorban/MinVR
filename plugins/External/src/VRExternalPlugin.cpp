@@ -47,6 +47,10 @@ public:
 		vrMain->renderOnAllDisplays();
 	}
 
+	void* getObject(const std::string& name) {
+		return vrMain->getObject(name);
+	}
+
 	private:
 		VRMain *vrMain;
 		MINVR_CALLBACK eventCallback, contextCallback, sceneCallback;
@@ -72,6 +76,11 @@ extern "C" {
 	PLUGIN_API void frame(void* app) {
 		ExternalApp* externalApp = static_cast<ExternalApp*>(app);
 		externalApp->frame();
+	}
+
+	PLUGIN_API void* getObject(void* app, char* name) {
+		ExternalApp* externalApp = static_cast<ExternalApp*>(app);
+		externalApp->getObject(name);
 	}
 
 	PLUGIN_API void dataIndexToString(char* str, const void* dataIndex) {

@@ -550,6 +550,10 @@ public:
     /// This is for MinVR internal use, public only for testing.
     bool _startLocalProcess(const std::string &name);
 
+    void* getObject(const std::string& name);
+    void setObject(const std::string& name, void* obj);
+    void removeObject(const std::string& name);
+
  private:
 
     VRSearchConfig _configPath;
@@ -578,6 +582,7 @@ public:
 
     int _frame;
 
+    std::map<std::string, void*> _objects;
 
 
     bool _shutdown;

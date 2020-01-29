@@ -34,6 +34,10 @@ public:
   virtual void addPluginSearchPath(const std::string& path) = 0;
   virtual int getArgc() = 0;
   virtual char** getArgv() = 0;
+  // Needed for getting objects that cannot be serialized in the data index
+  virtual void* getObject(const std::string& name) = 0;
+  virtual void setObject(const std::string& name, void* obj) = 0;
+  virtual void removeObject(const std::string& name) = 0;
 };
 
 

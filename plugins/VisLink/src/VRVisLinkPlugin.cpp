@@ -9,6 +9,7 @@
 #include <iostream>
 #include <plugin/VRPlugin.h>
 #include "VRVisLinkTextureNode.h"
+#include "VRVisLinkRenderTextureNode.h"
 
 // special: include this only once in one .cpp file per plugin
 #include <plugin/VRPluginVersion.h>
@@ -29,11 +30,14 @@ public:
 	{
       std::cout << "Registering VRVisLinkPlugin." << std::endl;
       api = new vislink::VisLinkAPIImpl();
+      vrMain->setObject("VisLinkAPI", api);
 	  vrMain->getFactory()->registerItemTypeWithParam<VRDisplayNode, VRVisLinkTextureNode, void*>("VRVisLinkTextureNode", api);
+	  vrMain->getFactory()->registerItemTypeWithParam<VRDisplayNode, VRVisLinkRenderTextureNode, void*>("VRVisLinkRenderTextureNode", api);
 	}
 
 	PLUGIN_API void unregisterWithMinVR(VRMainInterface *vrMain)
 	{
+      vrMain->removeObject("VisLinkAPI");
       //std::cout << "Unregistering GlfwPlugin." << std::endl;
 		// TODO
 	}

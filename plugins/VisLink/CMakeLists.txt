@@ -27,6 +27,7 @@ include(${CMAKE_FRAMEWORK_DIR}/project/project.cmake)
 # Source:
 set (SOURCEFILES 
   src/VRVisLinkTextureNode.cpp
+  src/VRVisLinkRenderTextureNode.cpp
   src/VRVisLinkPlugin.cpp
 )
 set (HEADERFILES

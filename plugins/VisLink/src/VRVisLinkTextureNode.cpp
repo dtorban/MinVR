@@ -32,10 +32,10 @@ VRVisLinkTextureNode::VRVisLinkTextureNode(const std::string &name, bool stereo,
     mainImage.update();
     
     std::cout << name << " " << getName() << std::endl; 
-    api->createSharedTexture(getName() + "/0/Left", vislink::Texture());
-    api->createSharedTexture(getName() + "/0/Right", vislink::Texture());
-    api->createSharedTexture(getName() + "/1/Left", vislink::Texture());
-    api->createSharedTexture(getName() + "/1/Right", vislink::Texture());
+    api->createSharedTexture(getName() + "/Left/0", vislink::Texture());
+    api->createSharedTexture(getName() + "/Right/0", vislink::Texture());
+    api->createSharedTexture(getName() + "/Left/1", vislink::Texture());
+    api->createSharedTexture(getName() + "/Right/1", vislink::Texture());
 }
 
 VRVisLinkTextureNode::~VRVisLinkTextureNode() {
@@ -166,16 +166,17 @@ void VRVisLinkTextureNode::render(VRDataIndex *renderState, VRRenderHandler *ren
         GLuint format = GL_RGBA;
         GLuint internalFormat = GL_RGBA;
         GLuint type = GL_UNSIGNED_BYTE;
-        std::cout << "new api2: " << api << std::endl;
 
-	    textures[0].left = api->getSharedTexture(getName() + "/0/Left").id;
-	    textures[0].right = api->getSharedTexture(getName() + "/0/Right").id;
-	    textures[1].left = api->getSharedTexture(getName() + "/1/Left").id;
-	    textures[1].right = api->getSharedTexture(getName() + "/1/Right").id;
+	    textures[0].left = api->getSharedTexture(getName() + "/Left/0").id;
+	    textures[0].right = api->getSharedTexture(getName() + "/Right/0").id;
+	    textures[1].left = api->getSharedTexture(getName() + "/Left/1").id;
+	    textures[1].right = api->getSharedTexture(getName() + "/Right/1").id;
 
         Image* image = mainImage.getComponent<Image>();  
         glBindTexture(GL_TEXTURE_2D, textures[0].left);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, image->getWidth(), image->getHeight(), internalFormat, type, image->getData());
+        //glBindTexture(GL_TEXTURE_2D, textures[1].left);
+        //glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, image->getWidth(), image->getHeight(), internalFormat, type, image->getData());
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
@@ -221,7 +222,6 @@ void VRVisLinkTextureNode::renderTexture() {
 }
 
 void VRVisLinkTextureNode::displayFinishedRendering(VRDataIndex *renderState) {
-
 	frame++;
 }
 

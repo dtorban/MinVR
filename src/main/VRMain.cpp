@@ -1030,6 +1030,18 @@ std::vector<VRDisplayNode*> VRMain::getDisplayNodesByName(std::string name, VRDi
 	return vec;
 }
 
+void* VRMain::getObject(const std::string& name) {
+  return _objects[name];
+}
+
+void VRMain::setObject(const std::string& name, void* obj) {
+  _objects[name] = obj;
+}
+
+void VRMain::removeObject(const std::string& name) {
+  _objects.erase(_objects.find(name)); 
+}
+
 /**
 void VRMain::removeEventHandler(VREventHandler* eventHandler) {
 	for (int f = 0; f < _eventHandlers.size(); f++)
