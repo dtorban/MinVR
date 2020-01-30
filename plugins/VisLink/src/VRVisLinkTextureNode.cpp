@@ -28,7 +28,7 @@ private:
 VRVisLinkTextureNode::VRVisLinkTextureNode(const std::string &name, bool stereo, vislink::VisLinkAPI* api, VRWindowToolkit* winToolkit) : VRDisplayNode(name), frame(0), stereo(stereo), api(api), winToolkit(winToolkit)  {
     this->api = new vislink::VisLinkOpenGL(*api, new VRVisLinkProcLoader(winToolkit));
 
-    mainImage.addComponent(new Image("../cmake/framework/external/VisLinkLib/src/app/textures/test.png"));
+    //mainImage.addComponent(new Image("cmake/framework/external/VisLinkLib/src/app/textures/test.png"));
     mainImage.update();
     
     std::cout << name << " " << getName() << std::endl; 
@@ -172,9 +172,9 @@ void VRVisLinkTextureNode::render(VRDataIndex *renderState, VRRenderHandler *ren
 	    textures[1].left = api->getSharedTexture(getName() + "/Left/1").id;
 	    textures[1].right = api->getSharedTexture(getName() + "/Right/1").id;
 
-        Image* image = mainImage.getComponent<Image>();  
-        glBindTexture(GL_TEXTURE_2D, textures[0].left);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, image->getWidth(), image->getHeight(), internalFormat, type, image->getData());
+        //Image* image = mainImage.getComponent<Image>();  
+        //glBindTexture(GL_TEXTURE_2D, textures[0].left);
+        //glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, image->getWidth(), image->getHeight(), internalFormat, type, image->getData());
         //glBindTexture(GL_TEXTURE_2D, textures[1].left);
         //glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, image->getWidth(), image->getHeight(), internalFormat, type, image->getData());
 

@@ -39,6 +39,10 @@ VRGLFWWindowToolkit::VRGLFWWindowToolkit(VRMainInterface *vrMain) : _vrMain(vrMa
 }
 
 VRGLFWWindowToolkit::~VRGLFWWindowToolkit() {
+	for (int f = 0; f < _windows.size(); f++) {
+		std::cout << "destroy" << std::endl;
+		destroyWindow(f);
+	}
     glfwTerminate();
 }
 

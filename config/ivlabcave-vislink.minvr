@@ -45,6 +45,7 @@
     <Width>200</Width>
     <Height>200</Height>
 
+  <RootNode displaynodeType="VRGroupNode">
     <ThreadGroupNode displaynodeType="VRThreadGroupNode">
       <FrontWall displaynodeType="VRGraphicsWindowNode">
         <WindowTextures displaynodeType="VRVisLinkTextureNode"></WindowTextures>
@@ -63,8 +64,9 @@
         <XPos>450</XPos>
         <WindowTextures displaynodeType="VRVisLinkTextureNode"></WindowTextures>
       </RightWall>
+      </ThreadGroupNode>
 
-      <UnityDisplay displaynodeType="VRThreadGroupNode">
+      <UnityDisplay displaynodeType="VRGroupNode">
         <FrontWall displaynodeType="VRGroupNode">
           <XPos>250</XPos>
           <TopLeft type="floatarray">-4,4,-4</TopLeft>
@@ -103,7 +105,8 @@
             <DisplayGraph linkNode="/MinVR/Cave/MyDisplayGraph/HeadTracker"/>
         </RightWall>
       </UnityDisplay>
-    </ThreadGroupNode>
+
+  </RootNode>
     
     <!-- ********************** Display Graph ********************** -->
     <MyDisplayGraph>

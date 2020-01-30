@@ -48,7 +48,7 @@ add_external(VisLinkLib
 set(vislink_external_dir ${external_dir}/VisLinkLib/src/cmake/framework/external)
 
 add_definitions(-DGLM_FORCE_INLINE)
-include_directories(${external_dir}/glm/src)
+include_directories(${vislink_external_dir}/glm/src)
 include_directories(${external_dir}/VisLinkLib/src/src)
 
 set(DEP_LINK_DIRS ${DEP_LINK_DIRS} 

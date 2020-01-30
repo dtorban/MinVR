@@ -25,6 +25,12 @@ public:
 		vrMain->initialize(argc, argv);
 	}
 
+	~ExternalApp() {
+		vrMain->shutdown();
+		frame();
+		delete vrMain;
+	}
+
 	/// onVREvent is called when a new intput event happens.
 	void onVREvent(const VRDataIndex &event) {
 		eventCallback(this, &event);
@@ -98,6 +104,13 @@ extern "C" {
 	PLUGIN_API int dataIndexGetIntValue(const void* dataIndex, char* key) {
 		const VRDataIndex& index = *static_cast<const VRDataIndex*>(dataIndex);
 		return (int)index.getValue(key);
+	}
+
+	PLUGIN_API void* dataIndexGetObject(const void* dataIndex, char* key, void* app) {
+		const VRDataIndex& index = *static_cast<const VRDataIndex*>(dataIndex);
+		ExternalApp* externalApp = static_cast<ExternalApp*>(app);
+		std::string objKey = index.getValue(key);
+		return externalApp->getObject(objKey);
 	}
 
 	PLUGIN_API float dataIndexGetFloatValue(const void* dataIndex, char* key) {

@@ -55,6 +55,9 @@ public:
         }
     }
 
+	~MyVRApp() {
+		delete vrMain;
+	}
 
 	/// onVREvent is called when a new intput event happens.
 	void onVREvent(const VRDataIndex &event) {
