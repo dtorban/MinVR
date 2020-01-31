@@ -902,22 +902,30 @@ VRMain::updateAllModels() {
 
 
 void VRMain::renderOnAllDisplays() {
+	startRenderOnAllDisplays();
+	syncronizeAndDisplayOnAllDisplays();
+}
 
-  if (!_initialized) throw std::runtime_error("VRMain not initialized.");
+void VRMain::startRenderOnAllDisplays() {
+	if (!_initialized) throw std::runtime_error("VRMain not initialized.");
 
 	VRDataIndex renderState;
-  renderState.setName("RenderState");
+	renderState.setName("RenderState");
 	renderState.addData("InitRender", (int)(_frame == 0));
 
 	if (!_displayGraphs.empty()) {
 		VRCompositeRenderHandler compositeHandler(_renderHandlers);
 		for (std::vector<VRDisplayNode*>::iterator it = _displayGraphs.begin(); it != _displayGraphs.end(); ++it) (*it)->render(&renderState, &compositeHandler);
+	}
+}
 
-		// TODO: Advanced: if you are really trying to optimize performance, this
-		// is where you might want to add an idle callback.  Here, it's
-		// possible that the CPU is idle, but the GPU is still processing
-		// graphics comamnds.
+void VRMain::syncronizeAndDisplayOnAllDisplays() {
 
+	VRDataIndex renderState;
+	renderState.setName("RenderState");
+	renderState.addData("InitRender", (int)(_frame == 0));
+
+	if (!_displayGraphs.empty()) {
 		for (std::vector<VRDisplayNode*>::iterator it = _displayGraphs.begin(); it != _displayGraphs.end(); ++it) (*it)->waitForRenderToComplete(&renderState);
 	}
 

@@ -27,7 +27,7 @@ public:
 
 	~ExternalApp() {
 		vrMain->shutdown();
-		frame();
+		//frame();
 		delete vrMain;
 	}
 
@@ -51,6 +51,16 @@ public:
 		vrMain->synchronizeAndProcessEvents();
 		vrMain->updateAllModels();
 		vrMain->renderOnAllDisplays();
+	}
+
+	void startFrame() {
+		vrMain->synchronizeAndProcessEvents();
+		vrMain->updateAllModels();
+		vrMain->startRenderOnAllDisplays();
+	}
+
+	void endFrame() {
+		vrMain->syncronizeAndDisplayOnAllDisplays();
 	}
 
 	void* getObject(const std::string& name) {
@@ -84,6 +94,16 @@ extern "C" {
 		externalApp->frame();
 	}
 
+	PLUGIN_API void startFrame(void* app) {
+		ExternalApp* externalApp = static_cast<ExternalApp*>(app);
+		externalApp->startFrame();
+	}
+
+	PLUGIN_API void endFrame(void* app) {
+		ExternalApp* externalApp = static_cast<ExternalApp*>(app);
+		externalApp->endFrame();
+	}
+
 	PLUGIN_API void* getObject(void* app, char* name) {
 		ExternalApp* externalApp = static_cast<ExternalApp*>(app);
 		externalApp->getObject(name);
@@ -99,6 +119,13 @@ extern "C" {
 		std::string name = data.getName();
 		strcpy(str, name.c_str());
 		return name.size();
+	}
+
+	PLUGIN_API int dataIndexGetString(const void* dataIndex, char* str, char* key) {
+		const VRDataIndex& data = *static_cast<const VRDataIndex*>(dataIndex);
+		std::string value = data.getValue(key);
+		strcpy(str, value.c_str());
+		return value.size();
 	}
 
 	PLUGIN_API int dataIndexGetIntValue(const void* dataIndex, char* key) {

@@ -50,6 +50,7 @@ set(vislink_external_dir ${external_dir}/VisLinkLib/src/cmake/framework/external
 add_definitions(-DGLM_FORCE_INLINE)
 include_directories(${vislink_external_dir}/glm/src)
 include_directories(${external_dir}/VisLinkLib/src/src)
+include_directories(${external_dir}/VisLinkLib/src/examples/VLOpenGLConnector/lib/unity/include)
 
 set(DEP_LINK_DIRS ${DEP_LINK_DIRS} 
   ${vislink_external_dir}/SandBox/build/install/lib

@@ -473,7 +473,9 @@ public:
      */
     void renderOnAllDisplays();
 
+	void startRenderOnAllDisplays();
 
+	void syncronizeAndDisplayOnAllDisplays();
 
     /***** STEP 4: SHUTDOWN MINVR *****/
 

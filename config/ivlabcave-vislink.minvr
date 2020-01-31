@@ -32,7 +32,7 @@
     <!-- Common display graph configuration -->
     <Border>1</Border>
     <Caption>Desktop</Caption>
-    <StereoFormat>Mono</StereoFormat>
+    <StereoFormat>QuadBuffered</StereoFormat>
     <EyeSeparation>0.203</EyeSeparation>
     <NearClip>0.001</NearClip>
     <FarClip>500.0</FarClip>
@@ -42,26 +42,26 @@
   <LookAtCenter type="floatarray">0,0,0</LookAtCenter>
 
     <YPos>100</YPos>
-    <Width>200</Width>
-    <Height>200</Height>
+    <Width>512</Width>
+    <Height>512</Height>
 
   <RootNode displaynodeType="VRGroupNode">
     <ThreadGroupNode displaynodeType="VRThreadGroupNode">
       <FrontWall displaynodeType="VRGraphicsWindowNode">
         <WindowTextures displaynodeType="VRVisLinkTextureNode"></WindowTextures>
-        <XPos>250</XPos>
+        <XPos>512</XPos>
       </FrontWall>
       <Floor displaynodeType="VRGraphicsWindowNode">
-        <XPos>250</XPos>
-        <YPos>300</YPos>
+        <XPos>512</XPos>
+        <YPos>612</YPos>
         <WindowTextures displaynodeType="VRVisLinkTextureNode"></WindowTextures>
       </Floor>
       <LeftWall displaynodeType="VRGraphicsWindowNode">
-        <XPos>50</XPos>
+        <XPos>0</XPos>
         <WindowTextures displaynodeType="VRVisLinkTextureNode"></WindowTextures>
       </LeftWall>
       <RightWall displaynodeType="VRGraphicsWindowNode">
-        <XPos>450</XPos>
+        <XPos>1024</XPos>
         <WindowTextures displaynodeType="VRVisLinkTextureNode"></WindowTextures>
       </RightWall>
       </ThreadGroupNode>
